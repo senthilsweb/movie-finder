@@ -1,0 +1,134 @@
+@import "mixins";
+@import "swatches";
+@import "typography";
+@import "variables";
+
+// Import bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+
+/**
+ Custom Scrollbars
+ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+}
+::-webkit-scrollbar-thumb {
+    background: #e1e1e1;
+    border: 0 none #ffffff;
+    border-radius: 50px;
+    &:hover {
+        background: #c8c8c8;
+    }
+    &:active {
+        background: #C8C8C8;
+    }
+}
+::-webkit-scrollbar-track {
+    background: #ffffff;
+    border: 0 none #ffffff;
+    border-radius: 50px;
+    &:hover {
+        background: #ffffff;
+    }
+    &:active {
+        background: #ffffff;
+    }
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+// Page transitions
+$t-duration: 800ms;
+$t-delay: 300ms;
+.page-enter-active,
+.page-leave-active {
+    transition-duration: $t-duration * 2;
+
+    &::before,
+    &::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        display: block;
+        width: 100%;
+        height: 50%;
+        transition-property: opacity, transform;
+        transition-timing-function: ease-in-out;
+    }
+
+    &::before {
+        @extend .bg-gradient-info;
+    }
+
+    &::after {
+        top: 50%;
+        @extend .bg-gradient-info;
+    }
+}
+
+.page-leave {
+    &::before,
+    &::after {
+        transform: scaleX(0);
+    }
+}
+
+.page-leave-active {
+    &::before {
+        transition-duration: $t-duration;
+    }
+
+    &::after {
+        transition-duration: $t-duration - $t-delay;
+        transition-delay: $t-delay;
+    }
+}
+
+.page-leave-to {
+    &::before,
+    &::after {
+        transform: scale(1);
+        transform-origin: left;
+    }
+}
+
+.page-enter {
+    &::before,
+    &::after {
+        transform: scaleX(1);
+    }
+}
+
+.page-enter-active {
+    &::before {
+        transition-duration: $t-duration;
+    }
+
+    &::after {
+        transition-duration: $t-duration - $t-delay;
+        transition-delay: $t-delay;
+    }
+}
+
+.page-enter-to {
+    &::before,
+    &::after {
+        transform: scaleX(0);
+        transform-origin: right;
+    }
+}
+
+.fade-in {
+
+}
