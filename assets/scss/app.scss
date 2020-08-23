@@ -21,25 +21,25 @@
     height: 0;
 }
 ::-webkit-scrollbar-thumb {
-    background: #e1e1e1;
+    background: #172740;
     border: 0 none #ffffff;
     border-radius: 50px;
     &:hover {
-        background: #c8c8c8;
+        background: #172740;
     }
     &:active {
-        background: #C8C8C8;
+        background: #172740;
     }
 }
 ::-webkit-scrollbar-track {
-    background: #ffffff;
-    border: 0 none #ffffff;
+    background: transparent;
+    border: 0 none transparent;
     border-radius: 50px;
     &:hover {
-        background: #ffffff;
+        background: transparent;
     }
     &:active {
-        background: #ffffff;
+        background: transparent;
     }
 }
 ::-webkit-scrollbar-corner {

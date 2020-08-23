@@ -1,71 +1,87 @@
 <template>
     <section id="movie-details" :class="{'bg-gradient-dark': details === null}">
-        <div v-if="details !== null" class="detail-container">
-            <b-container>
-                <b-row>
-                    <b-col cols="12" md="6">
-                        <img :src="poster" :alt="details.Title" class="img-fluid">
-                    </b-col>
-                    <b-col cols="12" md="6" class="text-white">
-                        <h1 class="mb-0">{{ details.Title }}</h1>
-                        <b-badge variant="primary" class="mb-3 p-2">{{ details.Year }}</b-badge>
-                        <b-badge variant="primary" class="mb-3 p-2">{{ details.imdbID }}</b-badge>
-                        <dl>
-                            <dt>Directed By</dt>
-                            <dd>{{ details.Director }}</dd>
-                            <dt>Actors</dt>
-                            <dd>{{ details.Actors }}</dd>
-                            <dt>Plot</dt>
-                            <dd>{{ details.Plot }}</dd>
-                        </dl>
-                        <b-button
-                            v-if="trailerId !== '' && trailerId !== null"
-                            v-b-modal.modal-lg.modal-center
-                            variant="warning"
-                            size="sm"
-                            @click="showTrailer=true"
-                        >
-                            Watch Trailer
-                        </b-button>
-                    </b-col>
-                </b-row>
-            </b-container>
-            <b-modal
-                v-if="trailerId !== '' && trailerId !== null"
-                v-model="showTrailer"
-                size="lg"
-                centered
-                button-size="sm d-none"
-                header-bg-variant="dark text-white"
-                body-bg-variant="dark"
-                footer-bg-variant="dark d-none"
-                :title="'Watch ' + details.Title + ' Trailer'"
-            >
-                <iframe
-                    v-if="showTrailer"
-                    width="100%"
-                    height="400"
-                    :src="'https://www.youtube.com/embed/' + trailerId"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                />
-            </b-modal>
-        </div>
-        <span v-if="details !== null" class="body-bg" :style="posterBg" />
+        <template v-if="details !== null">
+            <div class="detail-container">
+                <b-container>
+                    <b-row>
+                        <b-col cols="12" md="6">
+                            <img :src="poster" :alt="details.Title" class="img-fluid">
+                        </b-col>
+                        <b-col cols="12" md="6" class="text-white">
+                            <h1 class="mb-0">{{ details.Title }} <small>{{ details.Genre }}</small></h1>
+                            <b-badge variant="primary" class="mb-3 p-2">{{ details.Released }}</b-badge>
+                            <b-badge variant="primary" class="mb-3 p-2">{{ details.imdbID }}</b-badge>
+                            <h4><i class="fad fa-star text-info" /> {{ details.imdbRating }} <small>({{ details.imdbVotes }} Votes)</small></h4>
+                            <dl>
+                                <dt>Actors</dt>
+                                <dd>{{ details.Actors }}</dd>
+                                <dt>Directed By</dt>
+                                <dd>{{ details.Director }}</dd>
+                                <dt>Written By</dt>
+                                <dd>{{ details.Writers }}</dd>
+                                <dt>Plot</dt>
+                                <dd>{{ details.Plot }}</dd>
+                                <dt>Awards</dt>
+                                <dd>{{ details.Awards }}</dd>
+                                <dt>Run Time</dt>
+                                <dd>{{ details.Runtime }}</dd>
+                            </dl>
+                            <b-button
+                                v-if="trailerId !== '' && trailerId !== null"
+                                v-b-modal.modal-lg.modal-center
+                                variant="warning"
+                                size="sm"
+                                @click="showTrailer=true"
+                            >
+                                Watch Trailer
+                            </b-button>
+                        </b-col>
+                    </b-row>
+
+                    <recommendations v-if="similarMovies.length > 0" :items="similarMovies" />
+                </b-container>
+
+                <b-modal
+                    v-if="trailerId !== '' && trailerId !== null"
+                    v-model="showTrailer"
+                    size="lg"
+                    centered
+                    button-size="sm d-none"
+                    header-bg-variant="dark text-white"
+                    body-bg-variant="dark"
+                    footer-bg-variant="dark d-none"
+                    :title="'Watch ' + details.Title + ' Trailer'"
+                >
+                    <iframe
+                        v-if="showTrailer"
+                        width="100%"
+                        height="400"
+                        :src="'https://www.youtube.com/embed/' + trailerId"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    />
+                </b-modal>
+            </div>
+            <span class="body-bg" :style="posterBg" />
+        </template>
         <vue-particles color="#dedede" class="particles" />
     </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Recommendations from '../../components/movie/Recommendations'
 
 export default {
     name: 'Movie',
-
+    components: {
+        Recommendations
+    },
     data () {
         return {
-            showTrailer: false
+            showTrailer: false,
+            similarMovies: []
         }
     },
     computed: {
@@ -89,6 +105,7 @@ export default {
             const movie = await this.$api.get('', { params: { i: this.$route.params.id } })
             await this.$store.commit('movies/setMovieDetails', movie)
             await this.getTrailer()
+            await this.getRecommendations()
         })
     },
 
@@ -102,6 +119,12 @@ export default {
             const res = await this.$api.get('https://api.themoviedb.org/3/movie/' + this.$route.params.id + '/videos?api_key=f187ec601eb1cd302d1bf2c5d15455ee&language=en-US')
             if (res.results.length > 0) {
                 this.$store.commit('movies/storeMovieTrailer', res.results[0].key)
+            }
+        },
+        async getRecommendations () {
+            const res = await this.$api.get('https://api.themoviedb.org/3/movie/' + this.$route.params.id + '/similar?api_key=f187ec601eb1cd302d1bf2c5d15455ee&language=en-US')
+            if (res.results.length > 0) {
+                this.similarMovies = res.results.slice(0, 6)
             }
         }
     },
@@ -153,6 +176,9 @@ export default {
             height: 100%;
             background: rgba(0,0,0,0.3);
         }
+    }
+    small {
+        font-size: .5em;
     }
 }
 </style>
