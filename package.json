@@ -6,7 +6,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate && echo '/* /index.html  200' | cat >build/_redirects",
+    "generate": "nuxt generate && echo '/* /index.html  200' | cat >dist/_redirects",
     "lint:js": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "test": "jest"
