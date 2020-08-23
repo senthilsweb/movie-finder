@@ -1,5 +1,5 @@
 <template>
-    <section id="movie-details">
+    <section id="movie-details" :class="{'bg-gradient-dark': details === null}">
         <div v-if="details !== null" class="detail-container">
             <b-container>
                 <b-row>

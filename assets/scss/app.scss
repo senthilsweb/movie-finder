@@ -68,12 +68,12 @@ $t-delay: 300ms;
     }
 
     &::before {
-        @extend .bg-gradient-info;
+        @extend .bg-gradient-dark;
     }
 
     &::after {
         top: 50%;
-        @extend .bg-gradient-info;
+        @extend .bg-gradient-dark;
     }
 }
 
