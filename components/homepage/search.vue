@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container class="smaller">
         <b-jumbotron bg-variant="transparent">
             <b-input
                 v-model="query"
@@ -11,23 +11,43 @@
                 @blur="$emit('focused', false)"
                 @focus="$emit('focused', true)"
             />
-            <b-form-group class="text-center mt-3">
-                <b-form-radio-group
-                    id="result-variation"
+            <div class="text-center text-white mode-switch">
+                <strong class="text-small d-inline-block" @click="resultsMode=false">Slider</strong>
+                <b-form-checkbox
                     v-model="resultsMode"
-                    :options="options"
-                    button-variant="silver"
+                    name="mode-switch"
+                    switch
                     size="lg"
-                    buttons
-                    name="radios-btn-default"
+                    class="d-inline-block custom-switch"
                 />
-            </b-form-group>
+                <strong class="text-small d-inline-block" @click="resultsMode=true">Posters</strong>
+
+                <a href="#" class="float-right about-link" @click.prevent="showAbout=true">About</a>
+            </div>
         </b-jumbotron>
+
+        <b-modal
+            v-model="showAbout"
+            centered
+            button-size="sm d-none"
+            header-bg-variant=" bg-gradient-primary text-white"
+            body-bg-variant=" bg-gradient-primary"
+            footer-class="d-none"
+            title="About Me"
+        >
+            <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&autoplay=1"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+            />
+        </b-modal>
     </b-container>
 </template>
 
 <script>
-
 export default {
     name: 'Search',
 
@@ -37,25 +57,24 @@ export default {
             query: '',
             bouncer: null,
             timer: null,
-            options: [
-                { text: 'Slider', value: 'slider' },
-                { text: 'Posters', value: 'posters' }
-            ]
+            showAbout: false
         }
     },
 
     computed: {
         resultsMode: {
             get () {
-                return this.$store.getters['movies/resultsMode']
+                return this.$store.getters['movies/resultsMode'] === 'posters'
             },
             set (value) {
-                this.$store.commit('movies/setResultViewMode', value)
+                this.$store.commit('movies/setResultViewMode', value === true ? 'posters' : 'slider')
             }
         }
     },
 
     watch: {
+        // I later found out that boootstrap-vue inputs already has a debouncing method built-in,
+        // but wanted to keep it as is nevertheless :)
         query () {
             clearTimeout(this.timer)
             this.timer = setTimeout(() => this.fetch(), 200)
@@ -86,6 +105,9 @@ export default {
 </script>
 
 <style lang="scss">
+.container.smaller {
+    max-width: 700px;
+}
 @media (min-width: 675px) {
     .search-input {
         font-size: 2em;
@@ -93,5 +115,17 @@ export default {
     .btn-lg, .btn-group-lg > .btn {
         padding: 0.5rem 1rem 0.3rem;
     }
+}
+.mode-switch {
+    line-height: 40px;
+    .custom-switch {
+        margin: 5px 0 0 10px;
+        top: 3px;
+    }
+}
+.about-link {
+    transform: translateX(-20px);
+    line-height: 50px;
+    display: inline-block;
 }
 </style>

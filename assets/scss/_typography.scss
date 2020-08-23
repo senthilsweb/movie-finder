@@ -1,13 +1,14 @@
 $font-family-base: "Source Sans Pro", Helvetica, Arial, sans-serif;
 $font-size-base: 0.9rem;
 
+$link-color: #fff;
+$link-decoration: none;
+$link-hover-decoration: none;
+
 .text-display {
     font-family: 'Gugi', cursive;
 }
 
 .navbar-brand {
     border-radius: 2rem;
-    a {
-        text-decoration: none !important;
-    }
 }

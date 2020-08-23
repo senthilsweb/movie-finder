@@ -48,6 +48,10 @@ export default {
         })
     },
 
+    destroyed () {
+        this.$store.commit('movies/storeResults', [])
+    },
+
     methods: {
         changeFocus (newVal) {
             this.focused = newVal

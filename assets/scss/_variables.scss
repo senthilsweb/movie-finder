@@ -42,12 +42,5 @@ $btn-border-radius: 32px;
 $btn-border-radius-lg: $btn-border-radius;
 $input-btn-line-height-lg: 2;
 
-// Toasts
-$snotify-confirm-border-color: $blue;
-$snotify-border-width: 0;
-$snotify-simple-border-color: $blue;
-$snotify-success-border-color: $green;
-$snotify-info-border-color: $yellow;
-$snotify-warning-border-color: transparent;
-$snotify-error-border-color: transparent;
-$snotify-async-border-color: transparent;
+// Modals
+$modal-header-border-color: darken(rgb(0, 59, 104), 5%);

@@ -18,7 +18,7 @@
                                 <dt>Directed By</dt>
                                 <dd>{{ details.Director }}</dd>
                                 <dt>Written By</dt>
-                                <dd>{{ details.Writers }}</dd>
+                                <dd>{{ details.Writer }}</dd>
                                 <dt>Plot</dt>
                                 <dd>{{ details.Plot }}</dd>
                                 <dt>Awards</dt>

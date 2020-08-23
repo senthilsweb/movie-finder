@@ -2,7 +2,7 @@
     <div>
         <b-navbar class="text-center" fixed="top">
             <b-navbar-brand class="mx-auto text-white text-display text-lg bg-white text-primary px-3">
-                <nuxt-link to="/">Movie Findie</nuxt-link>
+                <nuxt-link to="/" class="text-primary">Movie Findie</nuxt-link>
             </b-navbar-brand>
         </b-navbar>
         <nuxt />
