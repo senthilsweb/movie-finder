@@ -14,7 +14,8 @@ $theme-colors: (
     "success": $green,
     "warning": $orange,
     "info": $yellow,
-    "silver": lighten($text-muted,35%)
+    "silver": lighten($text-muted,35%),
+    "dark": #383838,
 );
 
 $box-shadow: 0 0 10px rgba(#000, .3);

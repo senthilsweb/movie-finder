@@ -1,6 +1,7 @@
 export const state = () => ({
     searchResults: [],
     movieDetails: null,
+    trailerID: null,
     resultsMode: 'slider'
 })
 
@@ -16,6 +17,9 @@ export const getters = {
     },
     resultsMode (state) {
         return state.resultsMode
+    },
+    trailerId (state) {
+        return state.trailerID
     }
 }
 
@@ -28,5 +32,8 @@ export const mutations = {
     },
     setResultViewMode (state, mode) {
         state.resultsMode = mode
+    },
+    storeMovieTrailer (state, id) {
+        state.trailerID = id
     }
 }
