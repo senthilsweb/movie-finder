@@ -14,10 +14,6 @@ $theme-colors: (
     "success": $green,
     "warning": $orange,
     "info": $yellow,
-    "purple": $purple,
-    "lilac": $pink,
-    "lime": $lime,
-    "citrus": $citrus,
     "silver": lighten($text-muted,35%)
 );
 
@@ -27,7 +23,7 @@ $box-shadow-lg: 0 0 20px rgba(#000, .1);
 $gradients: (
     "primary" rgb(39,137,180) rgb(24,66,164),
     "warning" rgb(238,252,13) rgb(224,166,100),
-    "info" rgb(160, 122, 148) rgb(102, 79, 134),
+    "info" rgb(122, 137, 160) rgb(79, 104, 134),
     "danger" rgb(255,72,249) rgb(224,100,100),
     "success" rgb(137,252,248) rgb(104,100,224),
     "pink-purple" #FC89D6 #a264e0,

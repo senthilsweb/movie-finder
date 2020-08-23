@@ -11,9 +11,11 @@ $table-head-color: darken($text-muted,10%);
 
 // Forms
 $input-box-shadow: none;
-$input-border-radius-lg: 24px;
+$input-border-radius-lg: 36px;
 $input-border-radius-sm: 24px;
 $input-placeholder-color: #cdcdcd;
+$input-padding-y-lg: .5rem;
+$input-line-height-lg: 2;
 
 $input-group-addon-bg: transparent;
 
@@ -38,6 +40,7 @@ $btn-focus-box-shadow: none;
 $btn-xl-multiplier: 1.1;
 $btn-border-radius: 32px;
 $btn-border-radius-lg: $btn-border-radius;
+$input-btn-line-height-lg: 2;
 
 // Toasts
 $snotify-confirm-border-color: $blue;

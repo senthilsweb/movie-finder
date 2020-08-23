@@ -7,6 +7,8 @@
                         <h1 class="mb-0">{{ details.Title }}</h1>
                         <b-badge variant="primary" class="mb-3 p-2">{{ details.Year }}</b-badge>
                         <dl>
+                            <dt>Directed By</dt>
+                            <dd>{{ details.Director }}</dd>
                             <dt>Actors</dt>
                             <dd>{{ details.Actors }}</dd>
                             <dt>Plot</dt>
@@ -62,18 +64,24 @@ export default {
     min-height: 100vh;
 
     .poster {
-        height: 100vh;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
         background: 50% 50% no-repeat;
         background-size: cover;
         color: #fff;
         position: relative;
         z-index: 1;
 
+        // Let's make the poster object look like a real one in dimensions
+        &:before {
+            content: "";
+            padding-top: percentage(40/27); // Default movie poster aspect ratio
+            display: block;
+        }
+
         .container {
-            position: relative;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
             padding-top: 200px;
             z-index: 1;
             background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
@@ -87,6 +95,7 @@ export default {
         width: 100%;
         height: 100%;
         z-index: 0;
+        overflow: hidden;
     }
 }
 </style>

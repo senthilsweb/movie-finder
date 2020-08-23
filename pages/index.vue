@@ -1,47 +1,34 @@
 <template>
-    <section id="landing-section" class="bg-gradient-primary">
+    <section id="landing-section" class="bg-gradient-primary" :class="landingClass">
         <span class="overlay bg-gradient-dark" :class="overlayClass" />
         <span class="overlay bg-gradient-info" :class="overlay2Class" />
-        <search @focused="changeFocus" />
+        <search class="search-box" @focused="changeFocus" @fetchFinished="resultsActive=true" />
         <vue-particles color="#dedede" class="particles" />
 
-        <div v-show="resultsCount > 0" class="container">
-            <b-card-group columns>
-                <transition-group
-                    name="fade"
-                    :css="false"
-                    @before-enter="beforeEnter"
-                    @enter="enter"
-                    @leave="leave"
-                >
-                    <custom-card
-                        v-for="result in results"
-                        :key="result.imdbID"
-                        :result="result"
-                    />
-                </transition-group>
-            </b-card-group>
-        </div>
+        <poster-grid v-if="resultsActive && resultsCount > 0 && resultsMode === 'posters'" />
+        <slider v-if="resultsActive && resultsCount > 0 && resultsMode === 'slider'" />
     </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import velocity from 'velocity-animate'
 import Search from '../components/homepage/search'
-import CustomCard from '../components/homepage/custom-card'
+import PosterGrid from '../components/homepage/poster-grid'
+import Slider from '../components/homepage/slider'
 
 export default {
     name: 'HomePage',
 
     components: {
-        CustomCard,
+        Slider,
+        PosterGrid,
         Search
     },
 
     data () {
         return {
-            focused: false
+            focused: false,
+            resultsActive: false
         }
     },
 
@@ -52,32 +39,18 @@ export default {
         overlay2Class () {
             return (this.focused) ? 'active' : ''
         },
+        landingClass () {
+            return (this.resultsActive) ? 'active' : ''
+        },
         ...mapGetters({
             resultsCount: 'movies/resultsCount',
-            results: 'movies/results'
+            resultsMode: 'movies/resultsMode'
         })
     },
 
     methods: {
         changeFocus (newVal) {
             this.focused = newVal
-        },
-
-        // Transition methods
-        beforeEnter (el) {
-            el.style.opacity = 0
-        },
-        enter (el, done) {
-            const delay = el.dataset.index * 150
-            setTimeout(() => {
-                velocity(el, { opacity: 1 }, { complete: done })
-            }, delay)
-        },
-        leave (el, done) {
-            const delay = el.dataset.index * 150
-            setTimeout(() => {
-                velocity(el, { opacity: 0 }, { complete: done })
-            }, delay)
         }
     },
 
@@ -92,11 +65,22 @@ export default {
 <style lang="scss">
 #landing-section {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
     overflow: hidden;
+    position: relative;
+
+    .search-box {
+        transition: all 0.3s;
+        margin-top: calc(50vh - 100px);
+        position: relative;
+        z-index: 5;
+    }
+
+    &.active {
+        .search-box {
+            margin-top: 3em;
+        }
+    }
 
     .container {
         z-index: 1;
@@ -125,6 +109,7 @@ export default {
         width: 100%;
         height: 100%;
         z-index: 0;
+        overflow: hidden;
     }
 
     .card {

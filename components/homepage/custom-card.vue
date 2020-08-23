@@ -37,6 +37,10 @@ export default {
         },
         mouseLeave () {
             const card = this.$refs.card
+            if (!card) {
+                return
+            }
+
             const refl = this.$refs.refl
             card.style.transform = 'perspective(500px) scale(1)'
             refl.style.opacity = 0
@@ -44,8 +48,11 @@ export default {
 
         mouseMove () {
             const card = this.$refs.card
-            const refl = this.$refs.refl
+            if (!card) {
+                return
+            }
 
+            const refl = this.$refs.refl
             const relX = (event.offsetX + 1) / card.offsetWidth
             const relY = (event.offsetY + 1) / card.offsetHeight
             const rotY = `rotateY(${(relX - 0.5) * 20}deg)`
