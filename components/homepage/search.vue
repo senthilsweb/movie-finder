@@ -65,7 +65,15 @@ export default {
     methods: {
         async fetch () {
             if (this.query.length >= 3) {
-                const { Search } = await this.$api.get('/', { params: { s: this.query } })
+                const pattern = /tt([0-9]*)/
+                let Search
+                if (pattern.test(this.query)) {
+                    Search = await this.$api.get('/', { params: { i: this.query } })
+                    Search = [Search]
+                } else {
+                    const res = await this.$api.get('/', { params: { s: this.query } })
+                    Search = res.Search
+                }
 
                 this.$store.commit('movies/storeResults', Object.values(Search ?? {}))
                 if (this.$store.getters['movies/resultsCount'] > 0) {
