@@ -35,14 +35,10 @@
             footer-class="d-none"
             title="About Me"
         >
-            <iframe
-                width="100%"
-                height="315"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&autoplay=1"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-            />
+            <a href="https://burakgurbuz.com/en/about-me" target="_blank">
+                <img src="/about-me.jpg" class="img-fluid" alt="About Me">
+            </a>
+            <small class="d-block mt-3 text-center text-white">Click the image above to go to my personal homepage</small>
         </b-modal>
     </b-container>
 </template>

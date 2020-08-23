@@ -66,6 +66,7 @@ export default {
     },
     build: {},
     loading: {
-        color: '#fff'
+        color: '#fff',
+        height: '2px'
     }
 }

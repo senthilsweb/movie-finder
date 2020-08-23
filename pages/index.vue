@@ -7,6 +7,8 @@
 
         <poster-grid v-if="resultsActive && resultsCount > 0 && resultsMode === 'posters'" />
         <slider v-if="resultsActive && resultsCount > 0 && resultsMode === 'slider'" />
+
+        <dont-click />
     </section>
 </template>
 
@@ -15,11 +17,13 @@ import { mapGetters } from 'vuex'
 import Search from '../components/homepage/search'
 import PosterGrid from '../components/homepage/poster-grid'
 import Slider from '../components/homepage/slider'
+import DontClick from '../components/homepage/dont-click'
 
 export default {
     name: 'HomePage',
 
     components: {
+        DontClick,
         Slider,
         PosterGrid,
         Search
