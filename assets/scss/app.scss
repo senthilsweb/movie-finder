@@ -9,6 +9,10 @@
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
 
+body {
+    @extend .bg-gradient-primary;
+}
+
 /**
  Custom Scrollbars
  */
